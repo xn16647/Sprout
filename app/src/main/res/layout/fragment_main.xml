@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:descendantFocusability="blocksDescendants">
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp2_main"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/frame_main"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintBottom_toTopOf="@id/frame_main"
+            android:layout_height="0.5dp"/>
+
+        <FrameLayout
+            android:id="@+id/frame_main"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vp2_main">
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/nav_view"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                app:itemIconTint="@color/selector_main_nav"
+                android:background="?android:attr/windowBackground"
+                app:itemIconSize="20dp"
+                app:labelVisibilityMode="unlabeled"
+                app:menu="@menu/bottom_nav_menu" />
+
+        </FrameLayout>
+
+
+        <ImageView
+            android:id="@+id/image_main_more"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:src="@drawable/main_nav_more_normal"
+            app:layout_constraintBottom_toBottomOf="@id/frame_main"
+            app:layout_constraintEnd_toEndOf="@id/frame_main"
+            app:layout_constraintStart_toStartOf="@id/frame_main"
+            app:layout_constraintTop_toTopOf="@id/frame_main" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_start">
+
+
+
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.sprout.ui.fragment.main.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_main"
+        android:name="com.sprout.ui.fragment.main.MainFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_navigation_main_to_navigation_label"
+            app:destination="@id/navigation_label" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_dashboard"
+        android:name="com.sprout.ui.fragment.main.DiscoverFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_discover" />
+
+    <fragment
+        android:id="@+id/navigation_recommend"
+        android:name="com.sprout.ui.fragment.homesub.RecommendFragment"
+        tools:layout="@layout/fragment_recommend" />
+
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="com.sprout.ui.fragment.main.MessageFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_message" />
+
+    <fragment
+        android:id="@+id/navigation_label"
+        android:name="com.sprout.ui.fragment.main.LabelFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_label" />
+
+    <fragment
+        android:id="@+id/navigation_start"
+        android:name="com.sprout.ui.fragment.StartFragment"
+        tools:layout="@layout/fragment_start"
+        >
+        <action
+            app:enterAnim="@anim/push_bottom_in"
+            app:exitAnim="@anim/push_bottom_out"
+            android:id="@+id/action_navigation_start_to_navigation_login"
+            app:destination="@id/navigation_login" />
+        <action
+            android:id="@+id/action_navigation_start_to_navigation_main"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:destination="@id/navigation_main" />
+    </fragment>
+
+
+
+    <fragment
+        android:id="@+id/navigation_login"
+        android:name="com.sprout.ui.fragment.LoginFragment"
+        tools:layout="@layout/fragment_login"
+        >
+        <action
+            android:id="@+id/action_navigation_login_to_navigation_main"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:destination="@id/navigation_main" />
+    </fragment>
+
+
+</navigation>
