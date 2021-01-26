@@ -4,6 +4,7 @@ import android.os.Process
 import androidx.multidex.BuildConfig
 import androidx.multidex.MultiDex
 import cat.ereza.customactivityoncrash.config.CaocConfig
+import com.facebook.drawee.backends.pipeline.Fresco
 import com.sprout.ui.activity.MainActivity
 import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadSir
@@ -41,6 +42,7 @@ class App : BaseApp() {
         MMKV.initialize(this.filesDir.absolutePath + "/mmkv")
         PlayerFactory.setPlayManager(Exo2PlayerManager::class.java)
         GSYVideoType.setShowType(GSYVideoType.SCREEN_MATCH_FULL);
+        Fresco.initialize(this)
         //界面加载管理 初始化
         LoadSir.beginBuilder()
             .addCallback(LoadingCallback())//加载

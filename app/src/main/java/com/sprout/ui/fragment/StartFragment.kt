@@ -1,10 +1,6 @@
-package com.sprout.ui.fragment
+                                                                                 package com.sprout.ui.fragment
 
-import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.os.Message
 import androidx.fragment.app.Fragment
 import com.sprout.viewmodel.StartViewModel
 import com.sprout.R
@@ -15,7 +11,7 @@ import com.sprout.app.ext.navigateNoRepeat
 import com.sprout.app.ext.setCameraPermissions
 import com.sprout.app.ext.setLocationPermissions
 import com.sprout.app.util.CacheUtil
-import kotlinx.coroutines.delay
+import me.hgj.jetpackmvvm.base.appContext
 import java.util.*
 
 class StartFragment : BaseFragment<StartViewModel, FragmentStartBinding>() {

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="label"
+            type="com.sprout.data.model.bean.LabelTag" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/image_label_tag"
+            android:layout_width="45dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="12dp"
+            android:layout_height="45dp" />
+
+
+        <TextView
+            app:layout_constraintBottom_toBottomOf="@id/image_label_tag"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/txt_label_tag_msg"
+            app:layout_constraintStart_toEndOf="@id/image_label_tag"
+            android:layout_marginStart="12dp"
+            android:textSize="12sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@id/txt_label_tag_msg"
+            android:id="@+id/image_lable_title"
+            android:text="@{label.name}"
+            app:layout_constraintStart_toStartOf="@id/txt_label_tag_msg"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="10dp"
+            android:paddingBottom="10dp"
+            app:layout_constraintStart_toStartOf="@id/image_label_tag"
+            app:layout_constraintTop_toBottomOf="@id/image_label_tag" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

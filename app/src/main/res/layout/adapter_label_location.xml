@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="location"
+            type="com.sprout.data.model.bean.LocationInfo" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:id="@+id/cons_label_location"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/image_label_location"
+            android:layout_width="45dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="12dp"
+            android:src="@mipmap/tag_icon_w_location_big"
+            android:layout_height="45dp" />
+
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toTopOf="@id/image_label_location"
+            android:id="@+id/image_lable_location_title"
+            android:text="@{location.address2}"
+            android:layout_marginStart="12dp"
+            app:layout_constraintBottom_toBottomOf="@+id/image_label_location"
+            app:layout_constraintStart_toEndOf="@id/image_label_location"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="10dp"
+            android:paddingBottom="10dp"
+            app:layout_constraintStart_toStartOf="@id/image_label_location"
+            app:layout_constraintTop_toBottomOf="@id/image_label_location" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -22,6 +22,7 @@ import com.sprout.app.ext.nav
 import com.sprout.app.ext.navigateNoRepeat
 import com.sprout.app.ext.showMessage
 import com.sprout.app.util.CacheUtil
+import com.sprout.data.model.bean.Poi
 import com.sprout.databinding.FragmentLoginBinding
 import com.sprout.viewmodel.LoginViewModel
 import com.tencent.mmkv.MMKV
@@ -57,6 +58,7 @@ class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>(), AMap
     override fun initView(savedInstanceState: Bundle?) {
 
         mDatabind.loginClick = ProxyClick()
+        location()
 
     }
 
@@ -64,9 +66,7 @@ class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>(), AMap
         super.createObserver()
 
 
-
-
-
+        //加载数据
         mViewModel.run {
 
 

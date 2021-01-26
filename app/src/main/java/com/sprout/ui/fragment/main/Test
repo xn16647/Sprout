@@ -1,0 +1,364 @@
+package com.sprout.ui.fragment.main
+
+import android.content.ContentValues.TAG
+import android.graphics.Typeface
+import android.os.Bundle
+import android.util.Log
+import android.util.TypedValue
+import android.view.View
+import android.widget.TextView
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.widget.ViewPager2
+import com.amap.api.location.AMapLocation
+import com.amap.api.location.AMapLocationListener
+import com.amap.api.services.core.LatLonPoint
+import com.amap.api.services.core.PoiItem
+import com.amap.api.services.poisearch.PoiResult
+import com.amap.api.services.poisearch.PoiSearch
+import com.luck.picture.lib.PictureSelector
+import com.luck.picture.lib.config.PictureMimeType
+import com.luck.picture.lib.entity.LocalMedia
+import com.luck.picture.lib.listener.OnResultCallbackListener
+import com.sprout.R
+import com.sprout.app.base.BaseFragment
+import com.sprout.app.ext.download.openLocation
+import com.sprout.app.util.UploadHelper
+import com.sprout.app.weight.photodraweeview.ITagBean
+import com.sprout.app.weight.photodraweeview.PictureTagFrameLayout
+import com.sprout.app.weight.photodraweeview.PictureTagView
+import com.sprout.app.weight.photodraweeview.TagBean
+import com.sprout.app.weight.pic.GlideEngine
+import com.sprout.data.model.bean.LocationInfo
+import com.sprout.databinding.FragmentLabelBinding
+import com.sprout.ui.adapter.*
+import com.sprout.viewmodel.LabelViewModel
+import com.zhpan.bannerview.BannerViewPager
+import me.hgj.jetpackmvvm.base.appContext
+import me.hgj.jetpackmvvm.ext.parseState
+import me.hgj.jetpackmvvm.ext.util.logd
+import java.util.*
+
+
+class LabelFragment : BaseFragment<LabelViewModel, FragmentLabelBinding>(),
+    PoiSearch.OnPoiSearchListener {
+    override fun layoutId(): Int {
+        return R.layout.fragment_label
+    }
+
+
+    //用于存储阿里云图片地址的集合
+
+    val urlList = arrayListOf<String>()
+
+    //记录上一个初始化的tag
+    lateinit var lastTagText: TextView
+
+    override fun initView(savedInstanceState: Bundle?) {
+
+        mViewPager = mDatabind.bannerLabel as BannerViewPager<String>
+
+        initBannerPager()
+        selectPirture()
+
+
+        lastTagText = mDatabind.txtTagBrand
+
+        //绑定点击事件
+        mDatabind.onClick = Proxy()
+
+    }
+
+
+    private val brandAdapter: LabelBrandAdapter by lazy {
+        LabelBrandAdapter()
+    }
+    private val goodsAdapter: LabelGoodsAdapter by lazy {
+        LabelGoodsAdapter()
+    }
+    private val locationAdapter: LabelLocationAdapter by lazy {
+        LabelLocationAdapter()
+    }
+
+
+    fun onTagSelected(tagBean: ITagBean?) {
+
+
+        Log.d("TAG", "Top is${mDatabind.bannerLabel.top}")
+        Log.d("TAG", "Bottom is${mDatabind.bannerLabel.bottom}")
+        Log.d("TAG", "Right is${mDatabind.bannerLabel.right}")
+
+
+
+
+        if (tagBean != null) {
+            val itemView: View = bannerAdapter.getPrimaryItem()
+
+            if (itemView is PictureTagFrameLayout) {
+                tagBean.sx = 0.3f
+                tagBean.sy = 0.5f
+                (itemView as PictureTagFrameLayout).addItem(tagBean)
+            }
+        }
+    }
+
+
+    override fun createObserver() {
+        super.createObserver()
+
+        mViewModel.run {
+
+
+            //品牌列表数据的回调处理
+            mViewModel.labelBrandData.observe(viewLifecycleOwner, Observer {
+                parseState(it, {
+
+
+                    Log.e(TAG, "createObserver: $it")
+
+                    brandAdapter.setNewInstance(it.data.toMutableList())
+
+
+                    mDatabind.recyclerLabelChannel.apply {
+
+                        layoutManager = LinearLayoutManager(context)
+
+                        adapter = brandAdapter
+
+                    }
+                })
+            })
+
+            //商品列表的回调处理
+            mViewModel.labelGoodsData.observe(viewLifecycleOwner, Observer {
+                parseState(it, {
+
+                    goodsAdapter.setNewInstance(it.data.toMutableList())
+
+                    mDatabind.recyclerLabelChannel.apply {
+                        layoutManager = LinearLayoutManager(context)
+
+                        adapter = goodsAdapter
+                    }
+                })
+            })
+
+        }
+
+
+    }
+
+    val bannerAdapter:BannerLabelAdapter by lazy {
+        (BannerLabelAdapter())
+    }
+
+    //初始化banner属性
+
+    private fun initBannerPager() {
+
+        mViewPager.apply {
+
+            adapter = bannerAdapter
+            //绑定生命周期
+            setLifecycleRegistry(lifecycle)
+            //取消自动轮播
+            setAutoPlay(false)
+            //隐藏指示器
+            setIndicatorVisibility(View.GONE)
+
+            //监听滑动事件
+            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+
+
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    mDatabind.txtLabelBannerIndex.text = "${position + 1}/${urlList.size}"
+
+                }
+            }).create()
+
+
+        }
+    }
+
+    private lateinit var mViewPager: BannerViewPager<String>
+
+
+    //图片选择器
+    fun selectPirture() {
+
+
+        PictureSelector.create(this)
+            .openGallery(PictureMimeType.ofAll())
+            .loadImageEngine(GlideEngine().createGlideEngine())
+            .forResult(object : OnResultCallbackListener<LocalMedia?> {
+                override fun onResult(result: List<LocalMedia?>) {
+                    // 结果回调
+
+                    val list = result.mapTo(arrayListOf(), { it!!.realPath })
+
+                    //根据集合长度设置顶部页码
+                    mDatabind.txtLabelBannerIndex.text = "1/${list.size}"
+
+
+                    //将本地图片上传到阿里云，并返回url地址
+                    upImgToAliyun(list);
+
+                    //刷新数据
+                    mViewPager.refreshData(list)
+
+                }
+
+
+                override fun onCancel() {
+                    // 取消
+                }
+            })
+    }
+
+
+    //上传图片至阿里云
+    private fun upImgToAliyun(list: ArrayList<String>) {
+
+        showLoading("正在上传图片，请稍后")
+
+
+
+        for (s in list) {
+            val uploadImage = UploadHelper.uploadImage(s)
+            urlList.add(uploadImage)
+
+        }
+
+        dismissLoading()
+
+
+
+
+        mViewModel.getLabelBrandList(1)
+
+
+    }
+
+    //点击事件的处理
+    inner class Proxy {
+
+
+        fun txtTag(view: View) {
+
+            when (view.id) {
+                R.id.txt_tag_brand -> {
+                    setTagTheme(mDatabind.txtTagBrand)
+                    mViewModel.getLabelBrandList(1)
+                }
+                R.id.txt_tag_goods -> {
+                    setTagTheme(mDatabind.txtTagGoods)
+                    mViewModel.getLabelGoodsList(1)
+                }
+                R.id.txt_tag_location -> {
+                    setTagTheme(mDatabind.txtTagLocation)
+
+                    openLocation(object : AMapLocationListener {
+                        override fun onLocationChanged(p0: AMapLocation?) {
+
+                            val lat = p0?.getLatitude();//获取纬度
+                            val lon = p0?.getLongitude();//获取经度
+                            setSearchApi(lat!!, lon!!)
+                        }
+
+                    })
+
+                }
+                R.id.txt_tag_user -> setTagTheme(mDatabind.txtTagUser)
+                R.id.txt_label_next -> setTagTheme(mDatabind.txtTagUser)
+            }
+
+        }
+
+
+    }
+
+
+    //根据点击事件动态更换4个Tag的状态
+    private fun setTagTheme(txtTag: TextView) {
+
+
+        if (lastTagText != txtTag) {
+            txtTag.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15f)
+            txtTag.typeface = Typeface.defaultFromStyle(Typeface.BOLD)
+            txtTag.setTextColor(resources.getColor(R.color.black))
+            lastTagText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14F)
+            lastTagText.typeface = Typeface.defaultFromStyle(Typeface.NORMAL)
+            lastTagText.setTextColor(resources.getColor(R.color.colorBlack666))
+
+
+            lastTagText = txtTag
+
+
+            onTagSelected(TagBean(1,"小明是个好孩子","",-1,-1f,-1f))
+
+        }
+
+    }
+
+
+    /**
+     * 高德地图检索周边地址
+     */
+    fun setSearchApi(wei: Double, jing: Double) {
+        val query: PoiSearch.Query = PoiSearch.Query("", "", "")
+        query.pageSize = 20
+        val search = PoiSearch(appContext, query)
+        search.setBound(PoiSearch.SearchBound(LatLonPoint(wei, jing), 10000))
+        search.setOnPoiSearchListener(this)
+        search.searchPOIAsyn()
+        //up
+    }
+
+
+
+
+    override fun onPoiItemSearched(p0: PoiItem?, p1: Int) {
+    }
+
+    override fun onPoiSearched(result: PoiResult?, postion: Int) {
+        val query = result!!.query
+
+        val pois = result.pois
+
+        val list = arrayListOf<LocationInfo>()
+
+        for (poi in pois) {
+
+
+            val name = poi.cityName
+
+            val city: String = poi.adName //海淀区
+
+            val area: String = poi.businessArea //清河
+
+            val snippet: String = poi.snippet //街道地址
+
+            val detail: String = poi.title
+
+
+            val point = poi.latLonPoint //经纬度
+
+            snippet.logd("Label")
+
+            val info = LocationInfo(detail, city + area + snippet, point.latitude, point.longitude)
+
+            list.add(info)
+
+
+        }
+
+        locationAdapter.setNewInstance(list)
+        mDatabind.recyclerLabelChannel.apply {
+            layoutManager = LinearLayoutManager(context)
+
+            adapter = locationAdapter
+        }
+
+    }
+}

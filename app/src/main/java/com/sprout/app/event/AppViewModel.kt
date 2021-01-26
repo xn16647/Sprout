@@ -4,6 +4,7 @@ import me.hgj.jetpackmvvm.base.appContext
 import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
 import me.hgj.jetpackmvvm.callback.livedata.UnPeekLiveData
 import com.sprout.app.util.SettingUtil
+import com.sprout.data.model.bean.UserInfo
 
 /**
  * 作者　: hegaojian
@@ -14,7 +15,7 @@ import com.sprout.app.util.SettingUtil
 class AppViewModel : BaseViewModel() {
 
     //App的账户信息
-//    var userinfo = UnPeekLiveData<UserInfo>()
+    var userinfo = UnPeekLiveData<UserInfo>()
 
     //App主题颜色 中大型项目不推荐以这种方式改变主题颜色，比较繁琐耦合，且容易有遗漏某些控件没有设置主题色
     var appColor = UnPeekLiveData<Int>()

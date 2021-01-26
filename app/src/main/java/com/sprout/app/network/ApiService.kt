@@ -1,12 +1,9 @@
 package com.sprout.app.network
 
-import com.sprout.data.model.bean.ApiResponse
-import com.sprout.data.model.bean.RegisterMessage
-import com.sprout.data.model.bean.UserInfo
+import com.sprout.data.model.bean.*
 import retrofit2.http.*
 
 /**
- * 作者　: hegaojian
  * 时间　: 2019/12/23
  * 描述　: 网络API
  */
@@ -38,5 +35,13 @@ interface ApiService {
     //获取动态详情
     @GET("trends/trendsDetail")
     suspend fun getTrendsDetail(@Query("trendsid") id: Int)
+
+    //标签获取品牌列表
+    @GET("tag/brand")
+    suspend fun getLabelTagBrand(@Query("page") page: Int):ApiResponse<ApiPagerResponse<ArrayList<LabelTag>>>
+
+    //标签获取商品列表
+    @GET("tag/goods")
+    suspend fun getLabelTagGoods(@Query("page") page: Int):ApiResponse<ApiPagerResponse<ArrayList<LabelGoodsData>>>
 
 }

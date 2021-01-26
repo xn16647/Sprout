@@ -28,4 +28,6 @@ class LoginViewModel : BaseViewModel() {
         request({ HttpRequestManger().register(userName, userPsw, imei, lng, lat) }, registerInfo)
     }
 
+
+
 }

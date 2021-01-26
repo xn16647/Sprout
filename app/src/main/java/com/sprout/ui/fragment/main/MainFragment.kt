@@ -53,14 +53,19 @@ class MainFragment : BaseFragment<BaseViewModel, FragmentMainBinding>(),
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
 
+            //首页
             R.id.navigation_home -> mDatabind.vp2Main.setCurrentItem(0, false)
 
+            //
             R.id.navigation_discover -> mDatabind.vp2Main.setCurrentItem(1, false)
 
+            //消息页
             R.id.navigation_message -> mDatabind.vp2Main.setCurrentItem(3, false)
 
+            //发布页
             R.id.navigation_more -> jump(this)
 
+            //我的页面
             R.id.navigation_mine -> mDatabind.vp2Main.setCurrentItem(4, false)
         }
 

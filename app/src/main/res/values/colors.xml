@@ -11,6 +11,7 @@
     <color name="textHint">#999999</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="txtDefualColor">#333333</color>
     <color name="colorGray">#333</color>
     <color name="colorBlack666">#666</color>
     <color name="colorBlack333">#333</color>
