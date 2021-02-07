@@ -1,7 +1,5 @@
 package com.sprout.app.util;
 
-import android.app.Application;
-import android.text.Editable;
 import android.text.format.DateFormat;
 import android.util.Log;
 
@@ -13,7 +11,6 @@ import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.sprout.app.App;
 
-
 import java.io.File;
 import java.util.Date;
 
@@ -24,11 +21,16 @@ public class UploadHelper {
     private static final String ENDPOINT = "oss-cn-beijing.aliyuncs.com";
     //上传仓库名
     private static final String BUCKET_NAME = "sprout-lou";
+    //上传视频
+    private static final String VIDEO_TYPE = "video/mp4";
+    //上传图片
+    private static final String IMAGE_TYPE = "image/jpeg";
+    private static final String TAG = "fdsfds";
 
     private static OSS getOSSClient() {
         OSSCredentialProvider credentialProvider =
-                new OSSPlainTextAKSKCredentialProvider("LTAI4FxzWYxh5dDtQnesCz3V" ,
-                "ljjaVrxjLB8YPyJ3VajB5s7S3yy305");
+                new OSSPlainTextAKSKCredentialProvider("LTAI4FxzWYxh5dDtQnesCz3V",
+                        "ljjaVrxjLB8YPyJ3VajB5s7S3yy305");
         return new OSSClient(App.instance, ENDPOINT, credentialProvider);
     }
 
@@ -52,7 +54,7 @@ public class UploadHelper {
             //获取可访问的url
             String url = client.presignPublicObjectURL(BUCKET_NAME, objectKey);
             //格式打印输出
-            Log.e("Tag",String.format("PublicObjectURL:%s", url));
+            Log.e("Tag", String.format("PublicObjectURL:%s", url));
             return url;
         } catch (Exception e) {
             e.printStackTrace();
@@ -67,9 +69,27 @@ public class UploadHelper {
      * @param path 本地地址
      * @return 服务器地址
      */
-    public static String uploadImage(String path) {
-        String key = getObjectImageKey(path);
+    public static String uploadImage(String path, String mediaType) {
+
+
+        String key = "";
+
+
+        switch (mediaType.trim()) {
+            case VIDEO_TYPE:
+
+
+                key = getObjectAudioKey(path);
+                break;
+            case IMAGE_TYPE:
+                key = getObjectImageKey(path);
+                break;
+
+        }
+
         return upload(key, path);
+
+
     }
 
     /**
@@ -115,6 +135,13 @@ public class UploadHelper {
         String fileMd5 = HashUtil.getMD5String(new File(path));
         String dateString = getDateString();
         return String.format("image/%s/%s.jpg", dateString, fileMd5);
+
+    }
+
+    private static String getObjectVideoKey(String path) {
+        String fileMd5 = HashUtil.getMD5String(new File(path));
+        String dateString = getDateString();
+        return String.format("video/%s/%s.mp4", dateString, fileMd5);
     }
 
     //格式: portrait/201805/sfdsgfsdvsdfdsfs.jpg
@@ -128,7 +155,8 @@ public class UploadHelper {
     private static String getObjectAudioKey(String path) {
         String fileMd5 = HashUtil.getMD5String(new File(path));
         String dateString = getDateString();
-        return String.format("audio/%s/%s.mp3", dateString, fileMd5);
+        Log.d(TAG, "getObjectAudioKey: "+"我总感觉不太对劲");
+        return String.format("video/%s/%s.mp4", dateString, fileMd5);
     }
 
 }

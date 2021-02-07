@@ -4,32 +4,22 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.amap.api.location.AMapLocation
 import com.amap.api.location.AMapLocationClient
 import com.amap.api.location.AMapLocationClientOption
 import com.amap.api.location.AMapLocationListener
-import com.blankj.utilcode.util.ToastUtils
-import com.hjq.permissions.OnPermissionCallback
-import com.hjq.permissions.Permission
-import com.hjq.permissions.XXPermissions
 import com.sprout.R
-import com.sprout.app.App
 import com.sprout.app.base.BaseFragment
 import com.sprout.app.ext.nav
 import com.sprout.app.ext.navigateNoRepeat
 import com.sprout.app.ext.showMessage
 import com.sprout.app.util.CacheUtil
-import com.sprout.data.model.bean.Poi
 import com.sprout.databinding.FragmentLoginBinding
 import com.sprout.viewmodel.LoginViewModel
-import com.tencent.mmkv.MMKV
 import me.hgj.jetpackmvvm.ext.parseState
 import me.hgj.jetpackmvvm.ext.util.TAG
-import me.hgj.jetpackmvvm.ext.util.loge
-import kotlin.math.log
 
 
 class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>(), AMapLocationListener {
@@ -100,9 +90,22 @@ class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>(), AMap
                             if (it.code == 200) {
                                 CacheUtil.setUser(userResponse = it.userInfo)
                                 CacheUtil.setToken(it.token)
+                                Log.d(TAG, "createObserver: ${it.token}")
 
                                 showMessage("登录成功！", positiveAction = {
-                                    jumpFragment(this@LoginFragment)
+
+                                    val type = arguments?.getInt("type")
+
+                                    when (type) {
+                                        1 -> {
+                                            nav().navigateUp()
+                                        }
+                                        else -> {
+                                            jumpFragment(this@LoginFragment)
+                                        }
+                                    }
+
+
                                 })
                             } else {
                                 showMessage("登录失败！请检查账号密码是否正确！")

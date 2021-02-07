@@ -11,12 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="This is SameCityFragment" />
 
         <ImageView
             android:layout_marginTop="12dp"
@@ -27,7 +21,7 @@
             android:layout_marginEnd="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView4"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/local_mark_bg" />
 
 
@@ -47,14 +41,26 @@
             tools:ignore="SmallSp" />
 
         <TextView
+            android:id="@+id/textView4"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="@string/same_city_punch_clock"
+            android:textColor="@color/black"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="@id/txt_home_same_city_date"
-            app:layout_constraintTop_toBottomOf="@id/txt_home_same_city_date"
-            android:layout_marginTop="3dp"
-            android:textColor="@color/black"
-            android:text="@string/same_city_punch_clock"
-            android:layout_height="wrap_content"/>
+            app:layout_constraintTop_toBottomOf="@id/txt_home_same_city_date" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_same_city"
+            android:layout_width="0dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="1dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,9 +3,8 @@ package com.sprout.viewmodel
 import androidx.lifecycle.MutableLiveData
 import com.google.android.exoplayer2.upstream.RawResourceDataSource
 import com.sprout.R
-import com.sprout.data.model.bean.ApiResponse
+import com.sprout.app.network.apiService
 import com.sprout.data.model.bean.RegisterMessage
-import com.sprout.data.repository.request.HttpRequestManger
 import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
 import me.hgj.jetpackmvvm.ext.request
 import me.hgj.jetpackmvvm.state.ResultState
@@ -21,11 +20,11 @@ class LoginViewModel : BaseViewModel() {
 
 
     fun login(userName: String, userPsw: String) {
-        request({ HttpRequestManger().login(userName, userPsw) },registerInfo )
+        request({ apiService.login(userName, userPsw) },registerInfo )
     }
 
     fun register(userName: String, userPsw: String, imei: String, lng: String, lat: String) {
-        request({ HttpRequestManger().register(userName, userPsw, imei, lng, lat) }, registerInfo)
+        request({ apiService.register(userName, userPsw, imei, lng, lat) }, registerInfo)
     }
 
 

@@ -1,23 +1,23 @@
 package com.sprout.app
 
 import android.os.Process
-import androidx.multidex.BuildConfig
 import androidx.multidex.MultiDex
 import cat.ereza.customactivityoncrash.config.CaocConfig
 import com.facebook.drawee.backends.pipeline.Fresco
-import com.sprout.ui.activity.MainActivity
 import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadSir
 import com.shuyu.gsyvideoplayer.player.PlayerFactory
 import com.shuyu.gsyvideoplayer.utils.GSYVideoType
-import com.tencent.bugly.Bugly
-import com.tencent.bugly.crashreport.CrashReport
-import com.tencent.mmkv.MMKV
-import me.hgj.jetpackmvvm.base.BaseApp
+import com.sprout.BuildConfig
 import com.sprout.app.ext.getProcessName
 import com.sprout.app.weight.loadCallBack.EmptyCallback
 import com.sprout.app.weight.loadCallBack.ErrorCallback
 import com.sprout.app.weight.loadCallBack.LoadingCallback
+import com.sprout.ui.activity.MainActivity
+import com.tencent.bugly.Bugly
+import com.tencent.bugly.crashreport.CrashReport
+import com.tencent.mmkv.MMKV
+import me.hgj.jetpackmvvm.base.BaseApp
 import me.hgj.jetpackmvvm.ext.util.jetpackMvvmLog
 import me.hgj.jetpackmvvm.ext.util.logd
 import tv.danmaku.ijk.media.exo2.Exo2PlayerManager
@@ -62,7 +62,7 @@ class App : BaseApp() {
         // 初始化Bugly
         Bugly.init(context, if (BuildConfig.DEBUG) "xxx" else "a52f2b5ebb", BuildConfig.DEBUG)
         "".logd()
-        jetpackMvvmLog = BuildConfig.DEBUG
+        jetpackMvvmLog = BuildConfig.IS_LOG
 
         //防止项目崩溃，崩溃后打开错误界面
         CaocConfig.Builder.create()

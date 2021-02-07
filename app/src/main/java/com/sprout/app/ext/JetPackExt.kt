@@ -13,14 +13,14 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.sprout.R
 import com.sprout.app.weight.viewpager.ScaleTransitionPagerTitleView
 import com.sprout.ui.adapter.RecommendIndicatorAdapter
+import com.sprout.ui.fragment.homesub.RecommendFragment
 import com.sprout.ui.fragment.main.DiscoverFragment
 import com.sprout.ui.fragment.main.HomeFragment
 import com.sprout.ui.fragment.main.MessageFragment
 import com.sprout.ui.fragment.main.MyFragment
-import com.sprout.R
-import com.sprout.ui.fragment.homesub.RecommendFragment
 import me.hgj.jetpackmvvm.base.appContext
 import me.hgj.jetpackmvvm.ext.util.toHtml
 import me.hgj.jetpackmvvm.navigation.NavHostFragment

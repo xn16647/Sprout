@@ -15,5 +15,6 @@
     <string name="login_resend">重新发送</string>
     <string name="login_inpput_code">登录</string>
     <string name="same_city_punch_clock">开始打卡记录日常把~></string>
+    <string name="release_theme"># </string>
 
 </resources>

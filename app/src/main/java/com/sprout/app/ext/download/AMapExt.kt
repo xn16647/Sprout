@@ -1,16 +1,15 @@
 package com.sprout.app.ext.download
 
-import androidx.fragment.app.Fragment
 import com.amap.api.location.AMapLocationClient
 import com.amap.api.location.AMapLocationClientOption
 import com.amap.api.location.AMapLocationListener
+import com.amap.api.services.core.LatLonPoint
+import com.amap.api.services.poisearch.PoiSearch
 import me.hgj.jetpackmvvm.base.appContext
 import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
 
-fun BaseViewModel.openLocation(l: AMapLocationListener){
-    //初始化定位
-    val mLocationClient =
-        AMapLocationClient(appContext)
+fun BaseViewModel.openLocation(mLocationClient :AMapLocationClient,l: AMapLocationListener){
+
     //设置定位回调监听
     mLocationClient.setLocationListener(l)
     //初始化定位参数
@@ -23,4 +22,17 @@ fun BaseViewModel.openLocation(l: AMapLocationListener){
     mLocationClient.setLocationOption(mLocationOption)
     //启动定位
     mLocationClient.startLocation()
+
+
+
+}
+
+fun BaseViewModel.setAMapSearchApi(lat: Double, lon: Double,p:PoiSearch.OnPoiSearchListener) {
+    val query: PoiSearch.Query = PoiSearch.Query("", "", "")
+    query.pageSize = 20
+    val search = PoiSearch(appContext, query)
+    search.setBound(PoiSearch.SearchBound(LatLonPoint(lat, lon), 10000))
+    search.setOnPoiSearchListener(p)
+    search.searchPOIAsyn()
+    //up
 }

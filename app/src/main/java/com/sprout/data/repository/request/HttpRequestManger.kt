@@ -1,9 +1,8 @@
 package com.sprout.data.repository.request
 
-import com.sprout.app.network.ApiService
-import com.sprout.app.network.NetworkApi
 import com.sprout.app.network.apiService
 import com.sprout.data.model.bean.*
+import okhttp3.RequestBody
 
 /**
  * 描述　: 处理协程的请求类
@@ -43,6 +42,24 @@ class HttpRequestManger {
         return apiService.getLabelTagGoods(page)
     }
 
+    /**
+     * 获取主题列表
+     */
+    suspend fun getTheme():ApiResponse<ArrayList<ThemeBen>>{
+        return apiService.getTheme()
+    }
 
+    /**
+     * 发布动态
+     */
+    suspend fun release(request:RequestBody):ApiResponse<ReleaseBean>{
+        return apiService.release(request)
+    }
+
+
+    //获取首页动态
+    suspend fun getSameCityData(command:Int,page: Int = 1,size:Int = 10):ApiResponse<SameCityBean>{
+        return apiService.getSameCityData(command,page,size)
+    }
 
 }

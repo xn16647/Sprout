@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'kotlin-android-extensions'
 }
 
 android {
@@ -18,13 +19,23 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+
+    androidExtensions {
+        experimental = true
+    }
+
     buildFeatures {
         dataBinding = true
         viewBinding = true
     }
 
+
     buildTypes {
+        debug{
+            buildConfigField( "boolean","IS_LOG","true")
+        }
         release {
+            buildConfigField ("boolean","IS_LOG","false")
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -36,6 +47,13 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+
+    flavorDimensions 'sprout'
+    productFlavors {
+        google {
+            dimension = 'sprout'
+        }
     }
 
 }
@@ -125,8 +143,6 @@ dependencies {
     implementation 'com.amap.api:search:7.7.0'
 
 
-
-
     //  AndroidX 的应用
 
     implementation 'com.hjq:xxpermissions:9.6'
@@ -138,6 +154,6 @@ dependencies {
     //阿里云
     implementation 'com.aliyun.dpa:oss-android-sdk:2.9.5'
 
-
+    implementation 'com.lxj:xpopup:2.1.14'
 
 }

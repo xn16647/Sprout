@@ -1,9 +1,7 @@
 package com.sprout.app.util
 
-import android.graphics.Point
 import android.text.TextUtils
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.sprout.data.model.bean.Poi
 import com.sprout.data.model.bean.UserInfo
 import com.tencent.mmkv.MMKV
@@ -95,7 +93,7 @@ object CacheUtil {
     fun getToken(): String? {
 
         val kv = MMKV.mmkvWithID("app")
-        return kv.getString("token", null)
+        return kv.getString("token", "")
 
     }
 

@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="onClick"
+            type="com.sprout.ui.fragment.main.ReleaseFragment.ProxyClick" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,6 +22,7 @@
             android:layout_marginStart="6dp"
             android:layout_marginBottom="6dp"
             android:padding="10dp"
+            android:onClick="@{(view)->onClick.onClick(view)}"
             app:layout_constraintBottom_toTopOf="@id/card_line"
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@mipmap/titlebar_cancel" />
@@ -26,7 +31,7 @@
             android:id="@+id/card_line"
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="80dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -35,11 +40,12 @@
         <TextView
             android:id="@+id/txt_release_btn"
             android:layout_width="65dp"
-            android:layout_height="25dp"
+            android:layout_height="23dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/shape_label_next"
             android:gravity="center"
             android:text="发布"
+            android:onClick="@{(view)->onClick.onClick(view)}"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@id/image_release_close"
             app:layout_constraintEnd_toEndOf="parent"
@@ -48,11 +54,12 @@
         <TextView
             android:id="@+id/txt_save_release"
             android:layout_width="65dp"
-            android:layout_height="25dp"
+            android:layout_height="23dp"
             android:layout_marginEnd="6dp"
             android:background="@drawable/shape_save_release"
             android:gravity="center"
             android:text="存草稿"
+            android:onClick="@{(view)->onClick.onClick(view)}"
             android:textColor="@color/colorBlack333"
             android:textSize="13sp"
             app:layout_constraintBottom_toBottomOf="@id/txt_release_btn"
@@ -90,7 +97,7 @@
 
         <TextView
             android:layout_width="0dp"
-            android:layout_height="0.3dp"
+            android:layout_height="0.2dp"
             android:background="@color/colorBlack333"
             app:layout_constraintEnd_toEndOf="@id/edit_release_title"
             app:layout_constraintStart_toStartOf="@id/edit_release_title"
@@ -118,7 +125,7 @@
         <TextView
             android:id="@+id/line2"
             android:layout_width="0dp"
-            android:layout_height="0.3dp"
+            android:layout_height="0.2dp"
             android:layout_marginTop="120dp"
             android:background="@color/colorBlack333"
             app:layout_constraintEnd_toEndOf="@id/edit_release_title"
@@ -129,7 +136,7 @@
         <TextView
             android:id="@+id/line3"
             android:layout_width="0dp"
-            android:layout_height="0.3dp"
+            android:layout_height="0.2dp"
             android:layout_marginTop="50dp"
             android:background="@color/colorBlack333"
             app:layout_constraintEnd_toEndOf="@id/edit_release_title"
@@ -139,7 +146,7 @@
         <TextView
             android:id="@+id/line4"
             android:layout_width="0dp"
-            android:layout_height="0.3dp"
+            android:layout_height="0.2dp"
             android:layout_marginTop="50dp"
             android:background="@color/colorBlack333"
             app:layout_constraintEnd_toEndOf="@id/edit_release_title"
@@ -214,6 +221,7 @@
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/line4"
             app:layout_constraintEnd_toEndOf="@+id/line4"
+            android:onClick="@{(view)->onClick.onClick(view)}"
             app:layout_constraintStart_toStartOf="@+id/line4"
             app:layout_constraintTop_toBottomOf="@+id/line3" />
 
@@ -223,6 +231,7 @@
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/btn_release_address"
             app:layout_constraintEnd_toEndOf="@+id/line4"
+            android:onClick="@{(view)->onClick.onClick(view)}"
             app:layout_constraintStart_toStartOf="@+id/line4"
             app:layout_constraintTop_toTopOf="@+id/line2" />
 

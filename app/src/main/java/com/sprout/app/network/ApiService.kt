@@ -1,6 +1,7 @@
 package com.sprout.app.network
 
 import com.sprout.data.model.bean.*
+import okhttp3.RequestBody
 import retrofit2.http.*
 
 /**
@@ -44,4 +45,15 @@ interface ApiService {
     @GET("tag/goods")
     suspend fun getLabelTagGoods(@Query("page") page: Int):ApiResponse<ApiPagerResponse<ArrayList<LabelGoodsData>>>
 
+    //主题列表
+    @GET("theme/getTheme")
+    suspend fun getTheme():ApiResponse<ArrayList<ThemeBen>>
+
+    //发布动态
+    @POST("trends/submitTrends")
+    suspend fun release(@Body request:RequestBody):ApiResponse<ReleaseBean>
+
+    //获取首页动态
+    @GET("trends/trendsList")
+    suspend fun getSameCityData(@Query("command")command:Int,@Query("page")page: Int,@Query("size")size:Int):ApiResponse<SameCityBean>
 }

@@ -24,6 +24,10 @@
         tools:layout="@layout/fragment_main" >
         <action
             android:id="@+id/action_navigation_main_to_navigation_label"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
             app:destination="@id/navigation_label" />
     </fragment>
 
@@ -48,7 +52,15 @@
         android:id="@+id/navigation_label"
         android:name="com.sprout.ui.fragment.main.LabelFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_label" />
+        tools:layout="@layout/fragment_label" >
+        <action
+            android:id="@+id/action_navigation_label_to_navigation_release"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:destination="@id/navigation_release" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_start"
@@ -56,8 +68,10 @@
         tools:layout="@layout/fragment_start"
         >
         <action
-            app:enterAnim="@anim/push_bottom_in"
-            app:exitAnim="@anim/push_bottom_out"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
             android:id="@+id/action_navigation_start_to_navigation_login"
             app:destination="@id/navigation_login" />
         <action
@@ -85,5 +99,39 @@
             app:destination="@id/navigation_main" />
     </fragment>
 
+    <fragment
+        android:id="@+id/navigation_release"
+        android:name="com.sprout.ui.fragment.main.ReleaseFragment"
+        tools:layout="@layout/fragment_release" >
+        <action
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            android:id="@+id/action_navigation_release_to_navigation_release_add"
+            app:destination="@id/navigation_release_add" />
+        <action
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            android:id="@+id/action_navigation_release_to_navigation_main"
+            app:destination="@id/navigation_main" />
+        <action
+            android:id="@+id/action_navigation_release_to_navigation_login"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:destination="@id/navigation_login" />
+    </fragment>
+    <fragment
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right"
+        android:id="@+id/navigation_release_add"
+        android:name="com.sprout.ui.fragment.main.ReleaseAddFragment"
+        tools:layout="@layout/fragment_add_release" />
 
 </navigation>

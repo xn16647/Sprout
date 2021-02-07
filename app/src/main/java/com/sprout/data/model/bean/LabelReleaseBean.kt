@@ -1,28 +1,34 @@
 package com.sprout.data.model.bean
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class LabelReleaseBean(
     val address: String,
     val channelid: Int,
-    val lat: Int,
-    val lng: Int,
+    val lat: Double,
+    val lng: Double,
     val mood: String,
     val res: List<Res>,
     val themeid: Int,
     val title: String,
     val type: Int
-)
+):Parcelable
 
+@Parcelize
 data class Res(
-    val tags: List<Tag>,
+    val tags: List<Tag>?,
     val url: String
-)
+):Parcelable
 
+@Parcelize
 data class Tag(
     val id: Int,
-    val lat: Int,
-    val lng: Int,
+    val lat: Double,
+    val lng: Double,
     val name: String,
     val type: Int,
-    val x: Int,
-    val y: Int
-)
+    val x: Float,
+    val y: Float
+):Parcelable

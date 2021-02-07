@@ -18,4 +18,7 @@ class EventViewModel : BaseViewModel() {
     //添加TODO通知
     val todoEvent = EventLiveData<Boolean>()
 
+    // 图片本地地址
+    val imagePathsEvent = EventLiveData<List<String>>()
+
 }

@@ -7,7 +7,6 @@ import com.google.gson.GsonBuilder
 import me.hgj.jetpackmvvm.base.appContext
 import me.hgj.jetpackmvvm.network.BaseNetworkApi
 import me.hgj.jetpackmvvm.network.interceptor.CacheInterceptor
-import me.hgj.jetpackmvvm.network.interceptor.logging.LogInterceptor
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -37,7 +36,6 @@ class NetworkApi : BaseNetworkApi() {
     }
 
 
-
     /**
      * 实现重写父类的setHttpClientBuilder方法，
      * 在这里可以添加拦截器，可以对 OkHttpClient.Builder 做任意操作
@@ -52,8 +50,8 @@ class NetworkApi : BaseNetworkApi() {
             addInterceptor(MyHeadInterceptor())
             //添加缓存拦截器 可传入缓存天数，不传默认7天
             addInterceptor(CacheInterceptor())
-            // 日志拦截器
-            addInterceptor(LogInterceptor())
+            // 日志拦截器1
+            addNetworkInterceptor(LogInterceptor())
             //超时时间 连接、读、写
             connectTimeout(10, TimeUnit.SECONDS)
             readTimeout(5, TimeUnit.SECONDS)
